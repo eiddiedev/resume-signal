@@ -182,11 +182,19 @@ Content-Type: application/json
 
 项目已设置 `vite.config.js` 的 `base: "./"`，适合部署到 GitHub Pages。
 
+默认部署到 GitHub Pages 时不注入后端地址，页面会使用前端演示数据，确保评审可以打开页面完成基本交互。真实后端部署完成后，可在构建环境中设置公开的 `VITE_API_BASE_URL`。
+
 ```bash
 npm run deploy
 ```
 
 部署前需要将仓库推送到 GitHub，并确保 `gh-pages` 分支作为 Pages 来源。
+
+预期线上演示地址：
+
+```text
+https://eiddiedev.github.io/resume-signal/
+```
 
 ## 阿里云 Serverless 部署说明
 
