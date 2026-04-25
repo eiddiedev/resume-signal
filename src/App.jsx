@@ -8,7 +8,6 @@ function App() {
   const [result, setResult] = useState(null);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
-  const [apiNotice, setApiNotice] = useState("后端未调用");
   const [isDragging, setIsDragging] = useState(false);
 
   const isAnalyzing = status === "loading";
@@ -47,11 +46,9 @@ function App() {
 
     try {
       const response = await analyzeResume(file, jobDescription.trim());
-      setApiNotice(response.notice);
       setResult(response.data);
       setStatus("done");
     } catch (requestError) {
-      setApiNotice("请求失败");
       setError(`分析失败：${requestError.message}`);
       setStatus("idle");
     }
@@ -110,7 +107,7 @@ function App() {
           <button type="button" onClick={handleAnalyze} disabled={isAnalyzing}>
             {isAnalyzing ? "分析中" : "开始分析"}
           </button>
-          {error ? <p className="error">{error}</p> : <p>{apiNotice}</p>}
+          {error ? <p className="error">{error}</p> : <p>上传 PDF 后开始分析</p>}
         </div>
       </section>
 
@@ -153,8 +150,20 @@ function EmptyState() {
 
 function LoadingState() {
   return (
-    <section className="empty">
-      <p>正在调用 DeepSeek 分析简历...</p>
+    <section className="analysis-progress" aria-label="分析进度">
+      <div className="progress-heading">
+        <h2>正在分析</h2>
+        <span>AI PROCESSING</span>
+      </div>
+      <div className="progress-track">
+        <span />
+      </div>
+      <ol>
+        <li>读取 PDF 文本</li>
+        <li>抽取候选人信息</li>
+        <li>分析岗位关键词</li>
+        <li>生成匹配评分</li>
+      </ol>
     </section>
   );
 }
