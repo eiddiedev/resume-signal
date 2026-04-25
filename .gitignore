@@ -1,6 +1,7 @@
 node_modules
 dist
 tmp
+.codex
 backend/.venv
 backend/__pycache__
 backend/.env
